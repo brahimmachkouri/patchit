@@ -118,17 +118,25 @@ fn print_help() {
 }
 
 fn main() {
-    let args: HashMap<String, String> = env::args()
-    .skip(1)
-    .filter(|arg| arg.starts_with("--") || arg.starts_with("-"))
-    .flat_map(|arg| {
-        let mut split = arg.splitn(2, '=');
-        Some((
-            split.next()?.to_string(),
-            split.next().unwrap_or("").to_string(),
-        ))
-    })
-    .collect();
+    let mut args = HashMap::new();
+    let mut iter = env::args().skip(1).peekable();
+
+    while let Some(arg) = iter.next() {
+        if arg.starts_with("--") || arg.starts_with("-") {
+            if let Some(next_arg) = iter.peek() {
+                if !next_arg.starts_with("--") && !next_arg.starts_with("-") {
+                    // Format: --key value
+                    args.insert(arg, iter.next().unwrap());
+                } else {
+                    // Format: --key (no value)
+                    args.insert(arg, "".to_string());
+                }
+            } else {
+                // Last argument is a flag with no value
+                args.insert(arg, "".to_string());
+            }
+        }
+    }
 
     if args.contains_key("--help") || args.contains_key("-h") {
         print_help();
