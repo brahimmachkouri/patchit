@@ -24,7 +24,7 @@ Example on Windows:
 Example of generated JSON file:
 ```json
 	{
-	  "file_name": "mybinary.exe",
+	  "file_name": ".\\mybinary.exe",
 	  "checksum": "79935e89d59728ac456b592ca7b4f64dee0f3a7bb10e44e068cf0c635f885735",
 	  "patches": [
 	    {
