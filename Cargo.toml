@@ -1,0 +1,11 @@
+[package]
+name = "patchit"
+version = "0.1.0"
+edition = "2021"
+authors = ["Brahim Machkouri"]
+
+[dependencies]
+sha2 = "0.9"
+hex = "0.4"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
